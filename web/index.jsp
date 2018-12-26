@@ -8,6 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>JSP Page</title>
     </head>
     <body>
@@ -42,8 +43,7 @@
                         </div>
                     </div>
 
-                    <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
-
+                    <div id="pieChart"> </div>
                     <h2>Section title</h2>
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
@@ -176,50 +176,111 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-        <script src="../../assets/js/vendor/popper.min.js"></script>
-        <script src="../../dist/js/bootstrap.min.js"></script>
+
 
         <!-- Icons -->
         <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
         <script>
             feather.replace()
         </script>
-
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
         <!-- Graphs -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
         <script>
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                    datasets: [{
-                            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                            lineTension: 0,
-                            backgroundColor: 'transparent',
-                            borderColor: '#007bff',
-                            borderWidth: 4,
-                            pointBackgroundColor: '#007bff'
-                        }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                                ticks: {
-                                    beginAtZero: false
-                                }
-                            }]
-                    },
-                    legend: {
-                        display: false,
+            var webServiceURL = 'http://localhost:8080/adiiu-dashboard/Personas?method=personasAnyosVividos';
+            var soapMessage = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:personasAnyosVividos xmlns:ns2="http://serveisweb/"><entrada>{"param":["30","60"]}</entrada></ns2:personasAnyosVividos></S:Body></S:Envelope>';
+
+            function pintarGrafica(datos) {
+                var anyvividos = JSON.parse(datos);
+                var auxstr = '[';
+                var auxnum = 0;
+                var primer = true;
+                for (var i = 0; i < anyvividos.resultado.length; i++) {
+                    auxnum = auxnum + anyvividos.resultado[i].cantidad;
+                }
+                for (var i = 0; i < anyvividos.resultado.length; i++) {
+                    auxstr = auxstr + '{"name": "';
+                    auxstr = auxstr + anyvividos.resultado[i].key + '","y": ';
+                    auxstr = auxstr + (anyvividos.resultado[i].cantidad * 100.0 / auxnum);
+                    if (primer) {
+                        auxstr = auxstr + ', "sliced": true, "selected": true';
+                        primer = false;
                     }
+                    auxstr = auxstr + '},';
+                }
+                auxstr = auxstr.substring(0, auxstr.length - 1) + ']';
+                $('#pieChart').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Porcentaje edad de actores   total:'+auxnum
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                            name: "Brands",
+                            colorByPoint: true,
+                            data: JSON.parse(auxstr)
+                        }]
+                });
+            }
+
+            $(document).ready(function () {
+                if (sessionStorage.getItem("classepont-datos") == null) {
+                    $.ajax({
+                        url: webServiceURL,
+                        type: "POST",
+                        dataType: "xml",
+                        data: soapMessage,
+                        processData: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        success: OnSuccessAnimalsPercent,
+                        error: OnError
+                    });
+                } else {
+                    OnSuccessAnimalsPercent(sessionStorage.getItem("classepont-datos"));
                 }
             });
+
+            function OnSuccessAnimalsPercent(text) {
+                var aux;
+                if (sessionStorage.getItem("classepont-datos") == null) {
+                    aux = new XMLSerializer().serializeToString(text)
+                    sessionStorage.setItem("classepont-datos", aux);
+                } else {
+                    aux = sessionStorage.getItem("classepont-datos");
+                }
+                var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
+                $("#parr_resp").append("<b>" + resposta + "</b>");
+                $("#parr_resp").append("<br><br> traducció del JSON:<br>");
+                var anyvividos = JSON.parse(resposta);
+                for (var i = 0; i < anyvividos.resultado.length; i++) {
+                    $("#parr_resp").append(anyvividos.resultado[i].key + " --> " + anyvividos.resultado[i].value + "<br>");
+                }
+                pintarGrafica(resposta);
+            }
+
+            function OnError(text) {
+                console.log(text);
+            }
         </script>
     </body>
 </html>
