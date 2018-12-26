@@ -119,4 +119,27 @@ public class Personas {
         return res;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "personasAnyosVividos")
+    public String personasAnyosVividos(@WebParam(name = "entrada") String entrada) {
+        String[] pars = MeuJson.getArguments(entrada);
+        String res = "null";
+        DBPersonas dbp = new DBPersonas();
+        int edad1 = 0;
+        int edad2 = Integer.parseInt(pars[0]);
+        res = "{\"resultado\":["+ dbp.getPersonasAnyosVividos(edad1,edad2);
+        for (int i = 1; i < pars.length; i++ ) 
+        {
+             edad1 = Integer.parseInt(pars[i-1]);
+             edad2 = Integer.parseInt(pars[i]);
+             res = res + "," + dbp.getPersonasAnyosVividos(edad1,edad2);
+        }
+        
+        edad1 = Integer.parseInt(pars[pars.length - 1]);
+        res = res + "," + dbp.getPersonasAnyosVividos(edad1,-1)+ "]}";
+        return res;
+    }
+
 }

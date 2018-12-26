@@ -7,8 +7,10 @@ package basesdedades.dbutils;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -16,42 +18,32 @@ import java.util.ArrayList;
  */
 public class DBPersonas {
     
-    public String getAnyosVividos()
+    public String getPersonasAnyosVividos(int edad1, int edad2)
     {
+        int birthyear1 = LocalDateTime.now().getYear() - edad1;
+        int birthyear2 = LocalDateTime.now().getYear() - edad2;
         String res = "";
         DBConnection dbc = new DBConnection();
         int nace;
         int muere;
         int vividos;
-        
-        int mayorQue60 = 0;
-        int menorQue30 = 0;
-        int entre3060 = 0;
+        res = "";
+        int menorQueParam = 0;
         nace = muere = vividos = 0;
         try {
             dbc.open();
-            String sql = "select * from namebasics;";
+            String sql;
+            if (edad2 != -1) sql = "select count(*) from namebasics where birthyear <= "+birthyear1+" and birthyear >="+birthyear2+";";
+            else sql = "select count(*) from namebasics where birthyear >= "+birthyear1;
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             res = "";
-            while (rs.next()) {
-                nace = rs.getInt("birthyear");
-                muere = rs.getInt("deathyear");
-                if (muere != -1) {
-                    vividos = muere - nace;
-                } else {
-                    vividos = (Year.now().getValue()) - nace;
-                }
-                
-                if (vividos > 60) mayorQue60++;
-                else if (vividos < 30) menorQue30++;
-                else entre3060++;
+            int count = 0;
+            if (rs.next()) {
+                count = rs.getInt("count(*)");
             } 
-            res = res + "["
-            + "{ \\\"key\\\" : \\\"Mayor que 60\\\", \\\"value\\\": "+mayorQue60 + "},"
-            + "{ \\\"key\\\" : \\\"Menor que 30\\\", \\\"value\\\": "+menorQue30 + "}," 
-            + "{ \\\"key\\\" : \\\"Entre 30 y 60\\\", \\\"value\\\": "+entre3060 + "}"
-            + "]";
+            if (edad2 != -1) res = res + "{\"key\":\""+edad1+"-"+edad2+"\",\"cantidad\": "+count + "}";
+            else             res = res + "{\"key\":\""+edad1+" plus\",\"cantidad\": "+count + "}";
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
