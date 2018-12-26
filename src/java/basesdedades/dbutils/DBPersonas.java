@@ -15,6 +15,50 @@ import java.util.ArrayList;
  * @author mascport
  */
 public class DBPersonas {
+    
+    public String getAnyosVividos()
+    {
+        String res = "";
+        DBConnection dbc = new DBConnection();
+        int nace;
+        int muere;
+        int vividos;
+        
+        int mayorQue60 = 0;
+        int menorQue30 = 0;
+        int entre3060 = 0;
+        nace = muere = vividos = 0;
+        try {
+            dbc.open();
+            String sql = "select * from namebasics;";
+            Statement stmt = dbc.getConection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            res = "";
+            while (rs.next()) {
+                nace = rs.getInt("birthyear");
+                muere = rs.getInt("deathyear");
+                if (muere != -1) {
+                    vividos = muere - nace;
+                } else {
+                    vividos = (Year.now().getValue()) - nace;
+                }
+                
+                if (vividos > 60) mayorQue60++;
+                else if (vividos < 30) menorQue30++;
+                else entre3060++;
+            } 
+            res = res + "["
+            + "{ \\\"key\\\" : \\\"Mayor que 60\\\", \\\"value\\\": "+mayorQue60 + "},"
+            + "{ \\\"key\\\" : \\\"Menor que 30\\\", \\\"value\\\": "+menorQue30 + "}," 
+            + "{ \\\"key\\\" : \\\"Entre 30 y 60\\\", \\\"value\\\": "+entre3060 + "}"
+            + "]";
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbc.close();
+        }
+        return res;
+    }
 
     public String getAnyosVividos(String A) {
         String a = A;
