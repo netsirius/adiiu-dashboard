@@ -11,16 +11,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Adiiu project">
-        <meta name="author" content="Renz Beltran and Hector Santos">
+        <meta name="author" content="Renz Beltran, Hector Santos and Luis Arjona">
         <link rel="icon" href="images/favicon.ico">
 
         <title>Dashboard Template for Bootstrap</title>
 
         <!-- Bootstrap core CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-        <!-- Custom styles for this template -->
-        <link href="css/dashboard.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <!-- Custom styles for this dashboard -->
+        <link href="/adiiu-dashboard/css/dashboard.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%
@@ -43,10 +43,12 @@
         %>
 
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<%=request.getContextPath()%>/privado/entradapas.jsp">Dashboard adiiu</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<%=request.getContextPath()%>/privado/entradapas.jsp">
+                Dashboard adiiu
+            </a>
             <ul class="navbar-nav px-3" wfd-id="22">
                 <li class="nav-item text-nowrap" wfd-id="23">
-                    <a class="nav-link" href="#">Sign in</a>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </li>
             </ul>
         </nav>
