@@ -45,133 +45,7 @@
 
                     <div id="pieChart"> </div>
                     <h2>Section title</h2>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Header</th>
-                                    <th>Header</th>
-                                    <th>Header</th>
-                                    <th>Header</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1,001</td>
-                                    <td>Lorem</td>
-                                    <td>ipsum</td>
-                                    <td>dolor</td>
-                                    <td>sit</td>
-                                </tr>
-                                <tr>
-                                    <td>1,002</td>
-                                    <td>amet</td>
-                                    <td>consectetur</td>
-                                    <td>adipiscing</td>
-                                    <td>elit</td>
-                                </tr>
-                                <tr>
-                                    <td>1,003</td>
-                                    <td>Integer</td>
-                                    <td>nec</td>
-                                    <td>odio</td>
-                                    <td>Praesent</td>
-                                </tr>
-                                <tr>
-                                    <td>1,003</td>
-                                    <td>libero</td>
-                                    <td>Sed</td>
-                                    <td>cursus</td>
-                                    <td>ante</td>
-                                </tr>
-                                <tr>
-                                    <td>1,004</td>
-                                    <td>dapibus</td>
-                                    <td>diam</td>
-                                    <td>Sed</td>
-                                    <td>nisi</td>
-                                </tr>
-                                <tr>
-                                    <td>1,005</td>
-                                    <td>Nulla</td>
-                                    <td>quis</td>
-                                    <td>sem</td>
-                                    <td>at</td>
-                                </tr>
-                                <tr>
-                                    <td>1,006</td>
-                                    <td>nibh</td>
-                                    <td>elementum</td>
-                                    <td>imperdiet</td>
-                                    <td>Duis</td>
-                                </tr>
-                                <tr>
-                                    <td>1,007</td>
-                                    <td>sagittis</td>
-                                    <td>ipsum</td>
-                                    <td>Praesent</td>
-                                    <td>mauris</td>
-                                </tr>
-                                <tr>
-                                    <td>1,008</td>
-                                    <td>Fusce</td>
-                                    <td>nec</td>
-                                    <td>tellus</td>
-                                    <td>sed</td>
-                                </tr>
-                                <tr>
-                                    <td>1,009</td>
-                                    <td>augue</td>
-                                    <td>semper</td>
-                                    <td>porta</td>
-                                    <td>Mauris</td>
-                                </tr>
-                                <tr>
-                                    <td>1,010</td>
-                                    <td>massa</td>
-                                    <td>Vestibulum</td>
-                                    <td>lacinia</td>
-                                    <td>arcu</td>
-                                </tr>
-                                <tr>
-                                    <td>1,011</td>
-                                    <td>eget</td>
-                                    <td>nulla</td>
-                                    <td>Class</td>
-                                    <td>aptent</td>
-                                </tr>
-                                <tr>
-                                    <td>1,012</td>
-                                    <td>taciti</td>
-                                    <td>sociosqu</td>
-                                    <td>ad</td>
-                                    <td>litora</td>
-                                </tr>
-                                <tr>
-                                    <td>1,013</td>
-                                    <td>torquent</td>
-                                    <td>per</td>
-                                    <td>conubia</td>
-                                    <td>nostra</td>
-                                </tr>
-                                <tr>
-                                    <td>1,014</td>
-                                    <td>per</td>
-                                    <td>inceptos</td>
-                                    <td>himenaeos</td>
-                                    <td>Curabitur</td>
-                                </tr>
-                                <tr>
-                                    <td>1,015</td>
-                                    <td>sodales</td>
-                                    <td>ligula</td>
-                                    <td>in</td>
-                                    <td>libero</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <div id="barChart"></div>
                 </main>
             </div>
         </div>
@@ -185,11 +59,10 @@
         </script>
         <script src="js/highcharts.js"></script>
         <script src="js/exporting.js"></script>
-        <!-- Graphs -->
+        <!-- Graphs pie chart-->
         <script>
             var webServiceURL = 'http://localhost:8080/adiiu-dashboard/Personas?method=personasAnyosVividos';
             var soapMessage = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:personasAnyosVividos xmlns:ns2="http://serveisweb/"><entrada>{"param":["30","60"]}</entrada></ns2:personasAnyosVividos></S:Body></S:Envelope>';
-
             function pintarGrafica(datos) {
                 var anyvividos = JSON.parse(datos);
                 var auxstr = '[';
@@ -279,6 +152,115 @@
             }
 
             function OnError(text) {
+                console.log(text);
+            }
+            
+        </script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+         <script>
+            var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/PersonasPelis?method=personasPelis';
+            var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:personasPelis xmlns:ns2="http://serveisweb/"><edades>{"param":["30","60"]}</edades><cantidad>{"param":["5"]}</cantidad></ns2:personasPelis></S:Body></S:Envelope>';
+           
+
+            $(document).ready(function () {
+                if (sessionStorage.getItem("classepont-datosb") == null) {
+                    $.ajax({
+                        url: webServiceURLB,
+                        type: "POST",
+                        dataType: "xml",
+                        data: soapMessageB,
+                        processData: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        success: OnSuccessBarChart,
+                        error: OnErrorBar
+                    });
+                } else {
+                    OnSuccessBarChart(sessionStorage.getItem("classepont-datosb"));
+                }
+            });
+
+            function OnSuccessBarChart(text) {
+                var aux;
+                if (sessionStorage.getItem("classepont-datosb") == null) {
+                    aux = new XMLSerializer().serializeToString(text)
+                    sessionStorage.setItem("classepont-datosb", aux);
+                } else {
+                    aux = sessionStorage.getItem("classepont-datosb");
+                }
+                var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
+                pintarGraficaBar(resposta);
+            }
+
+            
+            function pintarGraficaBar(datos) {
+                var anyvividos = JSON.parse(datos);
+                var auxstr = [];
+                for (var i = 0; i < anyvividos.resultado.length; i++) {
+                    var auxstr2 = [];
+                    auxstr2.push(anyvividos.resultado[i].key);
+                    auxstr2.push(anyvividos.resultado[i].cantidad);
+                    auxstr.push(auxstr2);
+                }
+                
+                $('#barChart').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Actores peliculas'
+                    },
+                    xAxis: {
+                        type: 'Actores',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Peliculas'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+                    },
+                    series: [{
+                        name: 'Actores',
+                        data: auxstr,
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
+            }
+            
+            function OnErrorBar(text) {
                 console.log(text);
             }
         </script>
