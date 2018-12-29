@@ -43,4 +43,13 @@ public class localidades {
         res = dbl.getCuantasLocalidades(pars[0].toLowerCase());
         return res;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "paispeli")
+    public String paispeli() {
+        DBLocalidades dbl = new DBLocalidades();
+        return dbl.getCuantasPelisPaises();
+    }
 }

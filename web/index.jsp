@@ -9,7 +9,72 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <title>JSP Page</title>
+         <style>
+               /* Specific mapael css class are below
+         * 'mapael' class is added by plugin
+        */
+        
+        .mapael .mapTooltip {
+            position: absolute;
+            background-color: #fff;
+            moz-opacity: 0.80;
+            opacity: 0.80;
+            filter: alpha(opacity=80);
+            border-radius: 4px;
+            padding: 10px;
+            z-index: 1000;
+            max-width: 200px;
+            display: none;
+            color: #232323;
+        }
+        
+        .mapael .map {
+            margin-right: 10px;
+            overflow: hidden;
+            position: relative;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+
+        /* For all zoom buttons */
+        .mapael .zoomButton {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            color: #000;
+            width: 15px;
+            height: 15px;
+            line-height: 15px;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            font-weight: bold;
+            left: 10px;
+
+            -webkit-user-select: none;
+            -khtml-user-select : none;
+            -moz-user-select: none;
+            -o-user-select : none;
+            user-select: none;
+        }
+
+        /* Reset Zoom button first */
+        .mapael .zoomReset {
+            top: 10px;
+        }
+
+        /* Then Zoom In button */
+        .mapael .zoomIn {
+            top: 30px;
+        }
+
+        /* Then Zoom Out button */
+        .mapael .zoomOut {
+            top: 50px;
+        }
+         </style>
+
     </head>
     <body>
         <%@include  file ="/WEB-INF/cabecera.jsp" %>
@@ -46,6 +111,14 @@
                     <div id="pieChart"> </div>
                     <h2>Section title</h2>
                     <div id="barChart"></div>
+                    <div id="mapcontainer">
+                        <div class="rightPanel">
+                            <div class="areaLegend"></div>
+                            <div class="plotLegend"></div>
+                        </div>
+                        <div class="map"></div>
+                        <div style="clear: both;"></div>
+                    </div>
                 </main>
             </div>
         </div>
@@ -262,6 +335,114 @@
             
             function OnErrorBar(text) {
                 console.log(text);
+            }
+        </script>
+        
+        
+        
+        
+        
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/jquery.mapael.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/world_countries.js" charset="utf-8"></script>
+        
+        <script> 
+            var webServiceURLM = 'http://localhost:8080/adiiu-dashboard/localidades?method=paispeli';
+            var soapMessageM = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:paispeli xmlns:ns2="http://serveisweb/"></ns2:paispeli></S:Body></S:Envelope>';
+           
+
+            $(document).ready(function () {
+                if (sessionStorage.getItem("classepont-datosb") == null) {
+                    $.ajax({
+                        url: webServiceURLM,
+                        type: "POST",
+                        dataType: "xml",
+                        data: soapMessageM,
+                        processData: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        success: OnSuccessMap,
+                        error: OnErrorBar
+                    });
+                } else {
+                    OnSuccessMap(sessionStorage.getItem("classepont-datosm"));
+                }
+            });
+
+            function OnSuccessMap(text) {
+                var aux;
+                if (sessionStorage.getItem("classepont-datosm") == null) {
+                    aux = new XMLSerializer().serializeToString(text)
+                    sessionStorage.setItem("classepont-datosm", aux);
+                } else {
+                    aux = sessionStorage.getItem("classepont-datosm");
+                }
+                var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
+                pintarMapa(resposta);
+            }
+            function pintarMapa(datos) {
+                
+                var mapa = JSON.parse(datos);
+                var data = {};
+                for (var i = 0; i < mapa.resultado.length; i++) {
+                    eval("var aux = { value: " + mapa.resultado[i].cantidad + ", href: \"#\", tooltip: {content: \"<span  style=\\\"font-weight:bold;\\\">" 
+                         + mapa.resultado[i].key.toString().toUpperCase() + "</span><br />Actores:" + mapa.resultado[i].cantidad + "\"}}");
+                    eval("data." + mapa.resultado[i].key.toString().toUpperCase() + " = aux");
+                }
+                
+                $("#mapcontainer").mapael(
+                    {
+                        map: {
+                            name: "world_countries",
+                            zoom: {
+                                enabled: true,
+                                maxLevel: 10
+                            }
+                        },
+                        legend: {
+                            area: {
+                                display: true,
+                                title: "Country actors",
+                                marginBottom: 7,
+                                slices: [
+                                    {
+                                        max: 5,
+                                        attrs: {
+                                            fill: "#6ECBD4"
+                                        },
+                                        label: "Less than 5"
+                                    },
+                                    {
+                                        min: 5,
+                                        max: 10,
+                                        attrs: {
+                                            fill: "#3EC7D4"
+                                        },
+                                        label: "Between 5 and 10"
+                                    },
+                                    {
+                                        min: 10,
+                                        max: 50,
+                                        attrs: {
+                                            fill: "#028E9B"
+                                        },
+                                        label: "Between 10 and 50"
+                                    },
+                                    {
+                                        min: 50,
+                                        attrs: {
+                                            fill: "#01565E"
+                                        },
+                                        label: "More than 50"
+                                    }
+                                ]
+                            }
+                         
+                        },
+                        
+                        areas: data
+                    }
+                );
             }
         </script>
     </body>

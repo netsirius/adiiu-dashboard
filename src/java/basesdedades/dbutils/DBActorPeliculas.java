@@ -76,7 +76,7 @@ public class DBActorPeliculas {
         long cont;
         try {
             dbc.open();
-            String sql = "select * from namebasics where primaryname like '" + a + "';";
+            String sql = "select * from namebasics where primaryname = '" + a + "';";
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             cont = 0;

@@ -41,7 +41,7 @@ public class DBLocalidades {
         return res;
     }
     
-        public String getCuantasLocalidades(String A) {
+    public String getCuantasLocalidades(String A) {
         String res = "";
         long cont = 0;
         DBConnection dbc = new DBConnection();
@@ -59,5 +59,36 @@ public class DBLocalidades {
         }
         res = "{\"resultado\":" + cont + "}";
         return res;
+    }
+    
+    public String getCuantasPelisPaises()
+    {
+        String res = "{\"resultado\":[";
+        DBConnection dbc = new DBConnection();
+        try
+        {
+          dbc.open();
+          String sql = "select * from poblacionpeli;";
+          Statement stmt = dbc.getConection().createStatement();
+          ResultSet rs = stmt.executeQuery(sql);
+          
+          if (rs.next())
+          {
+              res = res + "{\"key\":\"" + rs.getString("pais") + "\",\"cantidad\":" + rs.getInt("cantidadpeli") + "}";
+          }
+          while(rs.next())
+          {
+              res = res + ",{\"key\":\"" + rs.getString("pais") + "\",\"cantidad\":" + rs.getInt("cantidadpeli") + "}";
+          }
+          
+          res = res + "]}";
+          return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbc.close();
+        }
+        
+        return "";
     }
 }
