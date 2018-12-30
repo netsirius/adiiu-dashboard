@@ -48,7 +48,7 @@
             </a>
             <ul class="navbar-nav px-3" wfd-id="22">
                 <li class="nav-item text-nowrap" wfd-id="23">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <a class="btn btn-primary btn-block" href="<%=request.getContextPath()%>/login.jsp">Login</a>
                 </li>
             </ul>
         </nav>

@@ -102,7 +102,7 @@ body {
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 
 
-// Login
+/** Login **/
 .form-control {
                 min-height: 41px;
                 background: #fff;
