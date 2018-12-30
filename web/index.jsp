@@ -9,71 +9,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-         <style>
-               /* Specific mapael css class are below
-         * 'mapael' class is added by plugin
-        */
-        
-        .mapael .mapTooltip {
-            position: absolute;
-            background-color: #fff;
-            moz-opacity: 0.80;
-            opacity: 0.80;
-            filter: alpha(opacity=80);
-            border-radius: 4px;
-            padding: 10px;
-            z-index: 1000;
-            max-width: 200px;
-            display: none;
-            color: #232323;
-        }
-        
-        .mapael .map {
-            margin-right: 10px;
-            overflow: hidden;
-            position: relative;
-            background-color: #ffffff;
-            border-radius: 5px;
-        }
-
-        /* For all zoom buttons */
-        .mapael .zoomButton {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            color: #000;
-            width: 15px;
-            height: 15px;
-            line-height: 15px;
-            text-align: center;
-            border-radius: 3px;
-            cursor: pointer;
-            position: absolute;
-            top: 0;
-            font-weight: bold;
-            left: 10px;
-
-            -webkit-user-select: none;
-            -khtml-user-select : none;
-            -moz-user-select: none;
-            -o-user-select : none;
-            user-select: none;
-        }
-
-        /* Reset Zoom button first */
-        .mapael .zoomReset {
-            top: 10px;
-        }
-
-        /* Then Zoom In button */
-        .mapael .zoomIn {
-            top: 30px;
-        }
-
-        /* Then Zoom Out button */
-        .mapael .zoomOut {
-            top: 50px;
-        }
-         </style>
 
     </head>
     <body>
@@ -107,17 +42,22 @@
                             </button>
                         </div>
                     </div>
-
-                    <div id="pieChart"> </div>
-                    <h2>Section title</h2>
-                    <div id="barChart"></div>
-                    <div id="mapcontainer">
-                        <div class="rightPanel">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6 col-md-6" id="pieChart"> </div>
+                        <div class="col-sm-12 col-lg-6 col-md-6" id="barChart"></div>
+                    </div>
+                    
+                    <h2>Map</h2>
+                    
+                    <div class="row" id="mapcontainer">
+                        <div class="col-lg-2 col-md-2 rightPanel">
                             <div class="areaLegend"></div>
                             <div class="plotLegend"></div>
                         </div>
-                        <div class="map"></div>
-                        <div style="clear: both;"></div>
+                        <div class="col-lg-10 col-md-10">
+                            <div class="map"></div>
+                            <div style="clear: both;"></div>
+                        </div>
                     </div>
                 </main>
             </div>
