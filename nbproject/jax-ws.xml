@@ -10,6 +10,9 @@
     <service name="localidades">
       <implementation-class>serveisweb.localidades</implementation-class>
     </service>
+    <service name="Peliculas">
+      <implementation-class>serveisweb.Peliculas</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

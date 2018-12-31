@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     </head>
     <body>
@@ -46,9 +46,9 @@
                         <div class="col-sm-12 col-lg-6 col-md-6" id="pieChart"> </div>
                         <div class="col-sm-12 col-lg-6 col-md-6" id="barChart"></div>
                     </div>
-                    
+
                     <h2>Map</h2>
-                    
+
                     <div class="row" id="mapcontainer">
                         <div class="col-lg-2 col-md-2 rightPanel">
                             <div class="areaLegend"></div>
@@ -103,7 +103,7 @@
                         type: 'pie'
                     },
                     title: {
-                        text: 'Porcentaje edad de actores   total:'+auxnum
+                        text: 'Porcentaje edad de actores   total:' + auxnum
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -167,23 +167,13 @@
             function OnError(text) {
                 console.log(text);
             }
-            
+
         </script>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-         <script>
+
+        <script>
             var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/PersonasPelis?method=personasPelis';
             var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:personasPelis xmlns:ns2="http://serveisweb/"><edades>{"param":["30","60"]}</edades><cantidad>{"param":["5"]}</cantidad></ns2:personasPelis></S:Body></S:Envelope>';
-           
+
 
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
@@ -214,7 +204,7 @@
                 pintarGraficaBar(resposta);
             }
 
-            
+
             function pintarGraficaBar(datos) {
                 var anyvividos = JSON.parse(datos);
                 var auxstr = [];
@@ -224,7 +214,7 @@
                     auxstr2.push(anyvividos.resultado[i].cantidad);
                     auxstr.push(auxstr2);
                 }
-                
+
                 $('#barChart').highcharts({
                     chart: {
                         type: 'column'
@@ -255,42 +245,39 @@
                         pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
                     },
                     series: [{
-                        name: 'Actores',
-                        data: auxstr,
-                        dataLabels: {
-                            enabled: true,
-                            rotation: -90,
-                            color: '#FFFFFF',
-                            align: 'right',
-                            format: '{point.y:.1f}', // one decimal
-                            y: 10, // 10 pixels down from the top
-                            style: {
-                                fontSize: '13px',
-                                fontFamily: 'Verdana, sans-serif'
+                            name: 'Actores',
+                            data: auxstr,
+                            dataLabels: {
+                                enabled: true,
+                                rotation: -90,
+                                color: '#FFFFFF',
+                                align: 'right',
+                                format: '{point.y:.1f}', // one decimal
+                                y: 10, // 10 pixels down from the top
+                                style: {
+                                    fontSize: '13px',
+                                    fontFamily: 'Verdana, sans-serif'
+                                }
                             }
-                        }
-                    }]
+                        }]
                 });
             }
-            
+
             function OnErrorBar(text) {
                 console.log(text);
             }
         </script>
-        
-        
-        
-        
-        
+
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="js/jquery.mapael.js" charset="utf-8"></script>
         <script type="text/javascript" src="js/world_countries.js" charset="utf-8"></script>
-        
-        <script> 
+
+        <script>
             var webServiceURLM = 'http://localhost:8080/adiiu-dashboard/localidades?method=paispeli';
             var soapMessageM = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:paispeli xmlns:ns2="http://serveisweb/"></ns2:paispeli></S:Body></S:Envelope>';
-           
+
 
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
@@ -321,67 +308,67 @@
                 pintarMapa(resposta);
             }
             function pintarMapa(datos) {
-                
+
                 var mapa = JSON.parse(datos);
                 var data = {};
                 for (var i = 0; i < mapa.resultado.length; i++) {
-                    eval("var aux = { value: " + mapa.resultado[i].cantidad + ", href: \"#\", tooltip: {content: \"<span  style=\\\"font-weight:bold;\\\">" 
-                         + mapa.resultado[i].key.toString().toUpperCase() + "</span><br />Actores:" + mapa.resultado[i].cantidad + "\"}}");
+                    eval("var aux = { value: " + mapa.resultado[i].cantidad + ", href: \"#\", tooltip: {content: \"<span  style=\\\"font-weight:bold;\\\">"
+                            + mapa.resultado[i].key.toString().toUpperCase() + "</span><br />Actores:" + mapa.resultado[i].cantidad + "\"}}");
                     eval("data." + mapa.resultado[i].key.toString().toUpperCase() + " = aux");
                 }
-                
+
                 $("#mapcontainer").mapael(
-                    {
-                        map: {
-                            name: "world_countries",
-                            zoom: {
-                                enabled: true,
-                                maxLevel: 10
-                            }
-                        },
-                        legend: {
-                            area: {
-                                display: true,
-                                title: "Country actors",
-                                marginBottom: 7,
-                                slices: [
-                                    {
-                                        max: 5,
-                                        attrs: {
-                                            fill: "#6ECBD4"
+                        {
+                            map: {
+                                name: "world_countries",
+                                zoom: {
+                                    enabled: true,
+                                    maxLevel: 10
+                                }
+                            },
+                            legend: {
+                                area: {
+                                    display: true,
+                                    title: "Country actors",
+                                    marginBottom: 7,
+                                    slices: [
+                                        {
+                                            max: 5,
+                                            attrs: {
+                                                fill: "#6ECBD4"
+                                            },
+                                            label: "Less than 5"
                                         },
-                                        label: "Less than 5"
-                                    },
-                                    {
-                                        min: 5,
-                                        max: 10,
-                                        attrs: {
-                                            fill: "#3EC7D4"
+                                        {
+                                            min: 5,
+                                            max: 10,
+                                            attrs: {
+                                                fill: "#3EC7D4"
+                                            },
+                                            label: "Between 5 and 10"
                                         },
-                                        label: "Between 5 and 10"
-                                    },
-                                    {
-                                        min: 10,
-                                        max: 50,
-                                        attrs: {
-                                            fill: "#028E9B"
+                                        {
+                                            min: 10,
+                                            max: 50,
+                                            attrs: {
+                                                fill: "#028E9B"
+                                            },
+                                            label: "Between 10 and 50"
                                         },
-                                        label: "Between 10 and 50"
-                                    },
-                                    {
-                                        min: 50,
-                                        attrs: {
-                                            fill: "#01565E"
-                                        },
-                                        label: "More than 50"
-                                    }
-                                ]
-                            }
-                         
-                        },
-                        
-                        areas: data
-                    }
+                                        {
+                                            min: 50,
+                                            attrs: {
+                                                fill: "#01565E"
+                                            },
+                                            label: "More than 50"
+                                        }
+                                    ]
+                                }
+
+                            },
+
+                            areas: data
+                        }
                 );
             }
         </script>

@@ -4,7 +4,7 @@
     Author     : miquel
 --%>
 
-<%@page import="basesdedades.dbutils.DBActorPeliculas"%>
+<%@page import="basesdedades.dbutils.DBPeliculas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,8 +14,8 @@
     </head>
     <body>
         <%@include  file="/WEB-INF/cabecera.jsp" %>
-        <h1>Las películas de John Wayne son:</h1>
+        <h1>Los ratings de las 10 primer apelículas son:</h1>
         <br/>
-        <%= (new DBActorPeliculas()).getActorPeliculas("John Wayne")%>
+        <%=(new DBPeliculas()).getRatingsPeliculas(10)%>
     </body>
 </html>
