@@ -18,13 +18,12 @@ import meujson.MeuJson;
 @WebService(serviceName = "Peliculas")
 public class Peliculas {
 
-        /**
+     /**
      * Web service operation
      */
     @WebMethod(operationName = "ratingpeliculas")
-    public String ratingpeliculas(@WebParam(name = "param") String param) {
-        //  Ejemplo:   ---->      param = {"param":["John Wayne"]};
-        String[] pars = MeuJson.getArguments(param);
+    public String ratingpeliculas(@WebParam(name = "cantidad") String cantidad) {
+        String[] pars = MeuJson.getArguments(cantidad);
         String res = "";
         DBPeliculas dbp = new DBPeliculas();
         res = dbp.getRatingsPeliculas(Integer.parseInt(pars[0]));

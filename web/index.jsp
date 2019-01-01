@@ -48,23 +48,23 @@
                 </ul>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div id="pieChart"> </div>
-                </div>
-                <div class="col-md-6">
-                    <div id="barChart"> </div>
-                </div>
+                <div class="col-sm-12 col-lg-6 col-md-6" id="pieChart"> </div>
+                <div class="col-sm-12 col-lg-6 col-md-6" id="ranking" style="background-color: white;"></div>
             </div>
+                <br/>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="col-lg-2 col-md-2 rightPanel">
-                        <div class="areaLegend"></div>
-                        <div class="plotLegend"></div>
-                    </div>
-                    <div class="col-lg-10 col-md-10">
-                        <div class="map"></div>
-                        <div style="clear: both;"></div>
-                    </div>
+                <div class="col-sm-12 col-lg-12 col-md-12" id="barChart"></div>
+            </div>
+            <br/>
+            <h3 class="text-center" >Actors by country</h3>
+            <div class="row" id="mapcontainer">
+                <div class="col-lg-2 col-md-2 rightPanel">
+                    <div class="areaLegend"></div>
+                    <div class="plotLegend"></div>
+                </div>
+                <div class="col-lg-10 col-md-10">
+                    <div class="map p-3"></div>
+                    <div style="clear: both;"></div>
                 </div>
             </div>
         </main>
@@ -165,6 +165,205 @@
                 pintarGrafica(resposta);
             }
             function OnError(text) {
+                console.log(text);
+            }
+        </script>
+        
+        <script src="https://code.highcharts.com/highcharts.js">
+        <script>
+            var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/Peliculas?method=ratingpeliculas';
+            var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:ratingpeliculas xmlns:ns2="http://serveisweb/"><cantidad>{"param":["10"]}</cantidad></ns2:ratingpeliculas></S:Body></S:Envelope>';
+            $(document).ready(function () {
+                if (sessionStorage.getItem("classepont-datosb") == null) {
+                    $.ajax({
+                        url: webServiceURLB,
+                        type: "POST",
+                        dataType: "xml",
+                        data: soapMessageB,
+                        processData: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        success: OnSuccessBarRanking,
+                        error: OnErrorRanking
+                    });
+                } else {
+                    OnSuccessBarRanking(sessionStorage.getItem("classepont-datosb"));
+                }
+            });
+            function OnSuccessBarRanking(text) {
+                var aux;
+                if (sessionStorage.getItem("classepont-datosb") == null) {
+                    aux = new XMLSerializer().serializeToString(text)
+                    sessionStorage.setItem("classepont-datosb", aux);
+                } else {
+                    aux = sessionStorage.getItem("classepont-datosb");
+                }
+                var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
+                pintarGraficaRanking(resposta);
+            }
+            function pintarGraficaRanking(datos) {
+                var anyvividos = JSON.parse(datos);
+                var auxstr = [];
+                for (var i = 0; i < anyvividos.resultado.length; i++) {
+                    var auxstr2 = [];
+                    auxstr2.push(anyvividos.resultado[i].key);
+                    auxstr2.push(anyvividos.resultado[i].cantidad);
+                    auxstr.push(auxstr2);
+                }
+                $('#ranking').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F0F0F0'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        offset: -10,
+                        lineWidth: 0,
+                        tickWidth: 20,
+                        tickLength: 20,
+                        tickInterval: 1,
+                        tickColor: '#9C9C9C',
+                        labels: {
+                            x: -3,
+                            style: {
+                                color: '#FFFFFF',
+                            },
+                            formatter: function () {
+                                var returningString = this.value.toString();
+
+                                if (returningString.length === 1) {
+                                    returningString = '0' + returningString;
+                                }
+
+                                return returningString;
+                            }
+                        }
+                    },
+                    yAxis: {
+                        endOnTick: false,
+                        gridLineWidth: 0,
+                        plotLines: [{
+                                value: 0,
+                                width: 20,
+                                color: '#EBEBEB',
+                                zIndex: 1
+                            }],
+                        title: {
+                            text: ''
+                        },
+                        labels: {
+                            enabled: false
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            pointStart: 1,
+                            borderWidth: 0,
+                            threshold: 0.5,
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    textOutline: false
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                            index: 1,
+                            color: '#11BED1',
+                            dataLabels: {
+                                align: 'left',
+                                formatter: function () {
+                                    return '$' + this.key;
+                                }
+                            },
+                            data: [{
+                                    name: 'OCN',
+                                    y: 6.5
+                                }, {
+                                    name: 'SCSS',
+                                    y: 6
+                                }, {
+                                    name: 'XOMA',
+                                    y: 5.5
+                                }, {
+                                    name: 'NVLS',
+                                    y: 5
+                                }, {
+                                    name: 'CSX',
+                                    y: 4.5
+                                }, {
+                                    name: 'VHC',
+                                    y: 4
+                                }, {
+                                    name: 'OPTT',
+                                    y: 3.5
+                                }, {
+                                    name: 'MVIS',
+                                    y: 3
+                                }, {
+                                    name: 'CYTR',
+                                    y: 2.5
+                                }, {
+                                    name: 'MAT',
+                                    y: 2
+                                }]
+                        }, {
+                            index: 0,
+                            color: '#000000',
+                            dataLabels: {
+                                align: 'center',
+                                formatter: function () {
+                                    console.log(this);
+                                    return '+' + this.point.value + '%';
+                                }
+                            },
+                            data: [{
+                                    y: 1.5,
+                                    value: 2739
+                                }, {
+                                    y: 1.5,
+                                    value: 2526
+                                }, {
+                                    y: 1.5,
+                                    value: 2500
+                                }, {
+                                    y: 1.5,
+                                    value: 2426
+                                }, {
+                                    y: 1.5,
+                                    value: 2143
+                                }, {
+                                    y: 1.5,
+                                    value: 2143
+                                }, {
+                                    y: 1.5,
+                                    value: 2118
+                                }, {
+                                    y: 1.5,
+                                    value: 1642
+                                }, {
+                                    y: 1.5,
+                                    value: 1561
+                                }, {
+                                    y: 1.5,
+                                    value: 1456
+                                }]
+                        }]
+                });
+            }
+            function OnErrorRanking(text) {
                 console.log(text);
             }
         </script>
