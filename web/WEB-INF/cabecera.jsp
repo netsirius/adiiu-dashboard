@@ -8,25 +8,22 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Dashboard</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Adiiu project">
-        <meta name="author" content="Renz Beltran, Hector Santos and Luis Arjona">
-        <link rel="icon" href="images/favicon.ico">
-
-        <title>Dashboard Template for Bootstrap</title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <!-- Custom styles for this dashboard -->
-        <link href="/adiiu-dashboard/css/dashboard.css" rel="stylesheet" type="text/css"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Main CSS-->
+        <link rel="stylesheet" type="text/css" href="/adiiu-dashboard/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/adiiu-dashboard/css/dashboard.css">
+        <!-- Font-icon css-->
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/A5EEC1E1-5267-9B48-8F5E-908EAB0BC708/main.js" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="http://gc.kis.v2.scr.kaspersky-labs.com/96052D22-3B55-5A4C-A40B-5F5B12D1AABA/abn/main.css"/>
     </head>
-    <body>
+    <body class="app sidebar-mini rtl">
         <%
             // Si es una página de la intranet y no permiso redirecciona al inicio
             String s = request.getRequestURI();
-            if ((s.contains("Curs1819/privado/") && (!(s.contains("/entradapas.jsp"))))) {
+            if ((s.contains("adiiu-dashboard/privado/") && (!(s.contains("/login.jsp"))))) {
                 String user = (String) session.getAttribute("user");
                 String pass = (String) session.getAttribute("pass");
                 if ((user == null) || (pass == null)) {
@@ -42,15 +39,28 @@
             }
         %>
 
-        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<%=request.getContextPath()%>/privado/entradapas.jsp">
-                Dashboard adiiu
-            </a>
-            <ul class="navbar-nav px-3" wfd-id="22">
-                <li class="nav-item text-nowrap" wfd-id="23">
-                    <a class="btn btn-primary btn-block" href="<%=request.getContextPath()%>/login.jsp">Login</a>
+        <!-- Navbar-->
+        <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath()%>/index.jsp">Dashboard</a>
+            <!-- Navbar Right Menu-->
+            <ul class="app-nav">
+                <!-- User Menu-->
+                <li class="py-2 mr-2">
+                    <a class="btn btn-primary btn-block" href="<%=request.getContextPath()%>/privado/login.jsp" style="background-color: blueviolet; border: 5px;">
+                        User login
+                    </a>
+                </li>        
+                <%
+                    if (session.getAttribute("user") != null) {
+                %>
+                <li class="py-2">
+                    <a class="btn btn-primary btn-block" href="<%=request.getContextPath()%>/privado/logoutprocess.jsp" style="background-color: black; border: 5px;">
+                        Log out
+                    </a>
                 </li>
+                <%
+                    }
+                %>
             </ul>
-        </nav>
+        </header>
     </body>
 </html>

@@ -1,7 +1,5 @@
 <%-- 
     Document   : index
-    Created on : 20-nov-2018, 11:12:29
-    Author     : mascport
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,58 +11,63 @@
     </head>
     <body>
         <%@include  file ="/WEB-INF/cabecera.jsp" %>
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    <span data-feather="home"></span>
-                                    Dashboard <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Dashboard</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button class="btn btn-sm btn-outline-secondary">Export</button>
-                            </div>
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar"></span>
-                                This week
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-6 col-md-6" id="pieChart"> </div>
-                        <div class="col-sm-12 col-lg-6 col-md-6" id="barChart"></div>
-                    </div>
-
-                    <h2>Map</h2>
-
-                    <div class="row" id="mapcontainer">
-                        <div class="col-lg-2 col-md-2 rightPanel">
-                            <div class="areaLegend"></div>
-                            <div class="plotLegend"></div>
-                        </div>
-                        <div class="col-lg-10 col-md-10">
-                            <div class="map"></div>
-                            <div style="clear: both;"></div>
-                        </div>
-                    </div>
-                </main>
+        <!-- Sidebar menu-->
+        <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+        <aside class="app-sidebar">
+            <%                if (session.getAttribute("user") != null) {
+            %>
+            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/adiiu-dashboard/images/ninja.png" alt="User Image">
+                <div>
+                    <p class="app-sidebar__user-name"><% out.print(session.getAttribute("user")); %></p>
+                    <p class="app-sidebar__user-designation">Admin user</p>
+                </div>
             </div>
-        </div>
-
-
-
+            <%
+                }
+            %>
+            <ul class="app-menu">
+                <li><a class="app-menu__item active" href="<%=request.getContextPath()%>/index.jsp"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+                            <%
+                                if (session.getAttribute("user") != null) {
+                            %>
+                <li><a class="app-menu__item" href="<%=request.getContextPath()%>/privado/entrada.jsp"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Admin Panel</span></a></li>
+                            <%
+                                }
+                            %>
+            </ul>
+        </aside>
+        <main class="app-content">
+            <div class="app-title">
+                <div>
+                    <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+                    <p>Dashboard ADIIU project</p>
+                </div>
+                <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="pieChart"> </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="barChart"> </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="col-lg-2 col-md-2 rightPanel">
+                        <div class="areaLegend"></div>
+                        <div class="plotLegend"></div>
+                    </div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="map"></div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
         <!-- Icons -->
         <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
         <script>
@@ -128,7 +131,6 @@
                         }]
                 });
             }
-
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datos") == null) {
                     $.ajax({
@@ -145,7 +147,6 @@
                     OnSuccessAnimalsPercent(sessionStorage.getItem("classepont-datos"));
                 }
             });
-
             function OnSuccessAnimalsPercent(text) {
                 var aux;
                 if (sessionStorage.getItem("classepont-datos") == null) {
@@ -163,18 +164,14 @@
                 }
                 pintarGrafica(resposta);
             }
-
             function OnError(text) {
                 console.log(text);
             }
-
         </script>
 
         <script>
             var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/PersonasPelis?method=personasPelis';
             var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:personasPelis xmlns:ns2="http://serveisweb/"><edades>{"param":["30","60"]}</edades><cantidad>{"param":["5"]}</cantidad></ns2:personasPelis></S:Body></S:Envelope>';
-
-
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
                     $.ajax({
@@ -191,7 +188,6 @@
                     OnSuccessBarChart(sessionStorage.getItem("classepont-datosb"));
                 }
             });
-
             function OnSuccessBarChart(text) {
                 var aux;
                 if (sessionStorage.getItem("classepont-datosb") == null) {
@@ -203,8 +199,6 @@
                 var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
                 pintarGraficaBar(resposta);
             }
-
-
             function pintarGraficaBar(datos) {
                 var anyvividos = JSON.parse(datos);
                 var auxstr = [];
@@ -214,7 +208,6 @@
                     auxstr2.push(anyvividos.resultado[i].cantidad);
                     auxstr.push(auxstr2);
                 }
-
                 $('#barChart').highcharts({
                     chart: {
                         type: 'column'
@@ -262,7 +255,6 @@
                         }]
                 });
             }
-
             function OnErrorBar(text) {
                 console.log(text);
             }
@@ -277,8 +269,6 @@
         <script>
             var webServiceURLM = 'http://localhost:8080/adiiu-dashboard/localidades?method=paispeli';
             var soapMessageM = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:paispeli xmlns:ns2="http://serveisweb/"></ns2:paispeli></S:Body></S:Envelope>';
-
-
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
                     $.ajax({
@@ -295,7 +285,6 @@
                     OnSuccessMap(sessionStorage.getItem("classepont-datosm"));
                 }
             });
-
             function OnSuccessMap(text) {
                 var aux;
                 if (sessionStorage.getItem("classepont-datosm") == null) {
@@ -308,7 +297,6 @@
                 pintarMapa(resposta);
             }
             function pintarMapa(datos) {
-
                 var mapa = JSON.parse(datos);
                 var data = {};
                 for (var i = 0; i < mapa.resultado.length; i++) {
@@ -316,7 +304,6 @@
                             + mapa.resultado[i].key.toString().toUpperCase() + "</span><br />Actores:" + mapa.resultado[i].cantidad + "\"}}");
                     eval("data." + mapa.resultado[i].key.toString().toUpperCase() + " = aux");
                 }
-
                 $("#mapcontainer").mapael(
                         {
                             map: {
@@ -364,9 +351,7 @@
                                         }
                                     ]
                                 }
-
                             },
-
                             areas: data
                         }
                 );

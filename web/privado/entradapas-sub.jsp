@@ -17,8 +17,8 @@
             String user = request.getParameter("user");
             String pass = request.getParameter("pass");
             ArrayList<String> aux = new ArrayList();
-            aux.add("Juan");
-            aux.add("patata");
+            aux.add("root");
+            aux.add("root");
             aux.add("0");
             if (aux.size() > 0) {
                 if ((user.contentEquals(aux.get(0))) && (pass.contentEquals(aux.get(1)))) {
