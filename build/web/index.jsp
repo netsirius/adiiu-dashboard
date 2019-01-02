@@ -51,7 +51,7 @@
                 <div class="col-sm-12 col-lg-6 col-md-6" id="pieChart"> </div>
                 <div class="col-sm-12 col-lg-6 col-md-6" id="ranking" style="background-color: white;"></div>
             </div>
-                <br/>
+            <br/>
             <div class="row">
                 <div class="col-sm-12 col-lg-12 col-md-12" id="barChart"></div>
             </div>
@@ -168,11 +168,10 @@
                 console.log(text);
             }
         </script>
-        
-        <script src="https://code.highcharts.com/highcharts.js">
+
         <script>
             var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/Peliculas?method=ratingpeliculas';
-            var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:ratingpeliculas xmlns:ns2="http://serveisweb/"><cantidad>{"param":["10"]}</cantidad></ns2:ratingpeliculas></S:Body></S:Envelope>';
+            var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:ratingpeliculas xmlns:ns2="http://serveisweb/"><cantidad>{"param":["11"]}</cantidad></ns2:ratingpeliculas></S:Body></S:Envelope>';
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
                     $.ajax({
@@ -201,13 +200,18 @@
                 pintarGraficaRanking(resposta);
             }
             function pintarGraficaRanking(datos) {
-                var anyvividos = JSON.parse(datos);
+                var peliculas = JSON.parse(datos);
                 var auxstr = [];
-                for (var i = 0; i < anyvividos.resultado.length; i++) {
-                    var auxstr2 = [];
-                    auxstr2.push(anyvividos.resultado[i].key);
-                    auxstr2.push(anyvividos.resultado[i].cantidad);
-                    auxstr.push(auxstr2);
+                var auxstr2 = [];
+                for (var i = 0; i < peliculas.resultado.length; i++) {
+                    var auxstr3 = [];
+                    var auxstr4 = [];
+                    auxstr3.push(peliculas.resultado[i].originaltitle);
+                    auxstr3.push(peliculas.resultado[i].votes);
+                    auxstr4.push(2);
+                    auxstr4.push(peliculas.resultado[i].ratio);
+                    auxstr.push(auxstr3);
+                    auxstr2.push(auxstr4);
                 }
                 $('#ranking').highcharts({
                     chart: {
@@ -227,7 +231,7 @@
                         enabled: false
                     },
                     xAxis: {
-                        offset: -10,
+                        offset: 2,
                         lineWidth: 0,
                         tickWidth: 20,
                         tickLength: 20,
@@ -285,39 +289,39 @@
                             dataLabels: {
                                 align: 'left',
                                 formatter: function () {
-                                    return '$' + this.key;
+                                    return '' + this.key;
                                 }
                             },
                             data: [{
-                                    name: 'OCN',
-                                    y: 6.5
+                                    name: auxstr[0][0],
+                                    y: auxstr[0][1]
                                 }, {
-                                    name: 'SCSS',
-                                    y: 6
+                                    name: auxstr[1][0],
+                                    y: auxstr[1][1]
                                 }, {
-                                    name: 'XOMA',
-                                    y: 5.5
+                                    name: auxstr[2][0],
+                                    y: auxstr[2][1]
                                 }, {
-                                    name: 'NVLS',
-                                    y: 5
+                                    name: auxstr[3][0],
+                                    y: auxstr[3][1]
                                 }, {
-                                    name: 'CSX',
-                                    y: 4.5
+                                    name: auxstr[4][0],
+                                    y: auxstr[4][1]
                                 }, {
-                                    name: 'VHC',
-                                    y: 4
+                                    name: auxstr[5][0],
+                                    y: auxstr[5][1]
                                 }, {
-                                    name: 'OPTT',
-                                    y: 3.5
+                                    name: auxstr[6][0],
+                                    y: auxstr[6][1]
                                 }, {
-                                    name: 'MVIS',
-                                    y: 3
+                                    name: auxstr[7][0],
+                                    y: auxstr[7][1]
                                 }, {
-                                    name: 'CYTR',
-                                    y: 2.5
+                                    name: auxstr[8][0],
+                                    y: auxstr[8][1]
                                 }, {
-                                    name: 'MAT',
-                                    y: 2
+                                    name: auxstr[9][0],
+                                    y: auxstr[9][1]
                                 }]
                         }, {
                             index: 0,
@@ -326,39 +330,39 @@
                                 align: 'center',
                                 formatter: function () {
                                     console.log(this);
-                                    return '+' + this.point.value + '%';
+                                    return '' + this.point.value + ' votos';
                                 }
                             },
                             data: [{
                                     y: 1.5,
-                                    value: 2739
+                                    value: auxstr2[0][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2526
+                                    value: auxstr2[1][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2500
+                                    value: auxstr2[2][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2426
+                                    value: auxstr2[3][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2143
+                                    value: auxstr2[4][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2143
+                                    value: auxstr2[5][1]
                                 }, {
                                     y: 1.5,
-                                    value: 2118
+                                    value: auxstr2[6][1]
                                 }, {
                                     y: 1.5,
-                                    value: 1642
+                                    value: auxstr2[7][1]
                                 }, {
                                     y: 1.5,
-                                    value: 1561
+                                    value: auxstr2[8][1]
                                 }, {
                                     y: 1.5,
-                                    value: 1456
+                                    value: auxstr2[9][1]
                                 }]
                         }]
                 });

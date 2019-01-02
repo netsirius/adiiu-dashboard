@@ -30,10 +30,11 @@ public class DBPeliculas {
                 res = "{\"resultado\":";
                 res = res + "[";
                 while (rs.next()) {
-                    res = res + "{\"originaltitle\":" + rs.getString("originaltitle") +",";
+                    res = res + "{\"originaltitle\":" + "\"" + rs.getString("originaltitle") + "\"" +",";
                     res = res + "\"ratio\":" + rs.getString("ratio") +",";
-                    res = res + "\"votes\":" + rs.getString("votes") +"}";
+                    res = res + "\"votes\":" + rs.getString("votes") +"},";
                 }
+                res = res.substring(0, res.length() - 1);
                 res = res + "]";
                 res = res + "}";
             } else {

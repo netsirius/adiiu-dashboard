@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="/adiiu-dashboard/css/dashboard.css">
         <!-- Font-icon css-->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/A5EEC1E1-5267-9B48-8F5E-908EAB0BC708/main.js" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="http://gc.kis.v2.scr.kaspersky-labs.com/96052D22-3B55-5A4C-A40B-5F5B12D1AABA/abn/main.css"/>
+        <!--<script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/A5EEC1E1-5267-9B48-8F5E-908EAB0BC708/main.js" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="http://gc.kis.v2.scr.kaspersky-labs.com/96052D22-3B55-5A4C-A40B-5F5B12D1AABA/abn/main.css"/>-->
     </head>
     <body class="app sidebar-mini rtl">
         <%
