@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/dbutils/DBPersonas.java</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/dbutils/DBProperties.java</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/web/WEB-INF/cabecera.jsp</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/web/login.jsp</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/web/index.jsp</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/dbutils/DBActorPeliculas.java</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/ParaBD.java</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/dbutils/DBLocalidades.java</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/web/privado/entrada.jsp</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/web/css/dashboard.css</file>
-            <file>file:/Users/hectorsantos/NetBeansProjects/Nueva%20Carpeta/adiiu-dashboard/src/java/basesdedades/dbutils/DBPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/basesdedades/dbutils/DBPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/web/index.jsp</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/basesdedades/dbutils/DBConnection.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/serveisweb/Personas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/basesdedades/ParaBD.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/basesdedades/dbutils/DBActorPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/src/java/serveisweb/Peliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/adiiu-dashboard/web/WEB-INF/cabecera.jsp</file>
         </group>
     </open-files>
 </project-private>
