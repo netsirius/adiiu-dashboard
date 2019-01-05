@@ -170,31 +170,31 @@
         </script>
 
         <script>
-            var webServiceURLB = 'http://localhost:8080/adiiu-dashboard/Peliculas?method=ratingpeliculas';
-            var soapMessageB = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:ratingpeliculas xmlns:ns2="http://serveisweb/"><cantidad>{"param":["11"]}</cantidad></ns2:ratingpeliculas></S:Body></S:Envelope>';
+            var webServiceURLR = 'http://localhost:8080/adiiu-dashboard/Peliculas?method=ratingpeliculas';
+            var soapMessageR = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:ratingpeliculas xmlns:ns2="http://serveisweb/"><cantidad>{"param":["10"]}</cantidad></ns2:ratingpeliculas></S:Body></S:Envelope>';
             $(document).ready(function () {
                 if (sessionStorage.getItem("classepont-datosb") == null) {
                     $.ajax({
-                        url: webServiceURLB,
+                        url: webServiceURLR,
                         type: "POST",
                         dataType: "xml",
-                        data: soapMessageB,
+                        data: soapMessageR,
                         processData: false,
                         contentType: "text/xml; charset=\"utf-8\"",
                         success: OnSuccessBarRanking,
                         error: OnErrorRanking
                     });
                 } else {
-                    OnSuccessBarRanking(sessionStorage.getItem("classepont-datosb"));
+                    OnSuccessBarRanking(sessionStorage.getItem("classepont-datosr"));
                 }
             });
             function OnSuccessBarRanking(text) {
                 var aux;
-                if (sessionStorage.getItem("classepont-datosb") == null) {
+                if (sessionStorage.getItem("classepont-datosr") == null) {
                     aux = new XMLSerializer().serializeToString(text)
-                    sessionStorage.setItem("classepont-datosb", aux);
+                    sessionStorage.setItem("classepont-datosr", aux);
                 } else {
-                    aux = sessionStorage.getItem("classepont-datosb");
+                    aux = sessionStorage.getItem("classepont-datosr");
                 }
                 var resposta = aux.substring(aux.indexOf("<return>") + 8, aux.indexOf("</return>"));
                 pintarGraficaRanking(resposta);
@@ -209,7 +209,7 @@
                     auxstr3.push(peliculas.resultado[i].originaltitle);
                     auxstr3.push(peliculas.resultado[i].votes);
                     auxstr4.push(2);
-                    auxstr4.push(peliculas.resultado[i].ratio);
+                    auxstr4.push(peliculas.resultado[i].ratio.toString());
                     auxstr.push(auxstr3);
                     auxstr2.push(auxstr4);
                 }
@@ -325,7 +325,7 @@
                                 }]
                         }, {
                             index: 0,
-                            color: '#000000',
+                            color: '#000100',
                             dataLabels: {
                                 align: 'center',
                                 formatter: function () {

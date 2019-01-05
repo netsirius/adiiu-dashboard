@@ -26,7 +26,6 @@ public class DBPeliculas {
             String sql = "select peliculas.originaltitle, ratingpelis.ratio,ratingpelis.votes from ratingpelis inner join peliculas on ratingpelis.tconst=peliculas.tconst order by ratingpelis.votes desc limit "+ cantidadPeliculas + ";";
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
                 res = "{\"resultado\":";
                 res = res + "[";
                 while (rs.next()) {
@@ -37,9 +36,6 @@ public class DBPeliculas {
                 res = res.substring(0, res.length() - 1);
                 res = res + "]";
                 res = res + "}";
-            } else {
-                res = res + "null";
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
