@@ -5,6 +5,7 @@
  */
 package serveisweb;
 
+import basesdedades.dbutils.DBPeliculas;
 import basesdedades.dbutils.DBPersonas;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -60,7 +61,7 @@ public class Personas {
                 res = dbp.getCuantosActoresMuertosEn(pars[1]);
             } else if (pars[0].contentEquals("lista")) {
                 if (pars.length == 4) {
-                    res = dbp.getActoresMuertosEnDeA(pars[1],Long.parseLong(pars[2]),Long.parseLong(pars[3]));
+                    res = dbp.getActoresMuertosEnDeA(pars[1], Long.parseLong(pars[2]), Long.parseLong(pars[3]));
                 } else {
                     res = dbp.getActoresMuertosEn(pars[1]);
                 }
@@ -85,7 +86,7 @@ public class Personas {
                 res = dbp.getCuantosActoresNacidosEn(pars[1]);
             } else if (pars[0].contentEquals("lista")) {
                 if (pars.length == 4) {
-                    res = dbp.getActoresNacidosEnDeA(pars[1],Long.parseLong(pars[2]),Long.parseLong(pars[3]));
+                    res = dbp.getActoresNacidosEnDeA(pars[1], Long.parseLong(pars[2]), Long.parseLong(pars[3]));
                 } else {
                     res = dbp.getActoresNacidosEn(pars[1]);
                 }
@@ -110,7 +111,7 @@ public class Personas {
                 res = dbp.getCuantosActoresSeLlaman(pars[1]);
             } else if (pars[0].contentEquals("lista")) {
                 if (pars.length == 4) {
-                    res = dbp.getActoresSeLlaman(pars[1],Long.parseLong(pars[2]),Long.parseLong(pars[3]));
+                    res = dbp.getActoresSeLlaman(pars[1], Long.parseLong(pars[2]), Long.parseLong(pars[3]));
                 } else {
                     res = dbp.getActoresSeLlaman(pars[1]);
                 }
@@ -129,16 +130,27 @@ public class Personas {
         DBPersonas dbp = new DBPersonas();
         int edad1 = 0;
         int edad2 = Integer.parseInt(pars[0]);
-        res = "{\"resultado\":["+ dbp.getPersonasAnyosVividos(edad1,edad2);
-        for (int i = 1; i < pars.length; i++ ) 
-        {
-             edad1 = Integer.parseInt(pars[i-1]);
-             edad2 = Integer.parseInt(pars[i]);
-             res = res + "," + dbp.getPersonasAnyosVividos(edad1,edad2);
+        res = "{\"resultado\":[" + dbp.getPersonasAnyosVividos(edad1, edad2);
+        for (int i = 1; i < pars.length; i++) {
+            edad1 = Integer.parseInt(pars[i - 1]);
+            edad2 = Integer.parseInt(pars[i]);
+            res = res + "," + dbp.getPersonasAnyosVividos(edad1, edad2);
         }
-        
+
         edad1 = Integer.parseInt(pars[pars.length - 1]);
-        res = res + "," + dbp.getPersonasAnyosVividos(edad1,-1)+ "]}";
+        res = res + "," + dbp.getPersonasAnyosVividos(edad1, -1) + "]}";
+        return res;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "actores")
+    public String actores(@WebParam(name = "cantidad") String cantidad) {
+        String[] pars = MeuJson.getArguments(cantidad);
+        String res = "";
+        DBPersonas dbp = new DBPersonas();
+        res = dbp.getActores(Integer.parseInt(pars[0]));
         return res;
     }
 

@@ -17,10 +17,8 @@ import java.util.Date;
  * @author mascport
  */
 public class DBPersonas {
-    
-    
-    public String getPersonasAnyosVividosLista(int edad1, int edad2, int cantidad)
-    {
+
+    public String getPersonasAnyosVividosLista(int edad1, int edad2, int cantidad) {
         int birthyear1 = LocalDateTime.now().getYear() - edad1;
         int birthyear2 = LocalDateTime.now().getYear() - edad2;
         String res = "";
@@ -34,24 +32,29 @@ public class DBPersonas {
         try {
             dbc.open();
             String sql;
-            if (edad2 != -1) sql = "select primaryname from namebasics where birthyear <= "+birthyear1+" and birthyear >="+birthyear2+" limit "+cantidad+";";
-            else sql = "select primaryname from namebasics where birthyear >= "+birthyear1+" limit "+cantidad+";";
+            if (edad2 != -1) {
+                sql = "select primaryname from namebasics where birthyear <= " + birthyear1 + " and birthyear >=" + birthyear2 + " limit " + cantidad + ";";
+            } else {
+                sql = "select primaryname from namebasics where birthyear >= " + birthyear1 + " limit " + cantidad + ";";
+            }
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             res = "";
             String lista = "";
-            
-            if (rs.next())
-            {
+
+            if (rs.next()) {
                 lista = lista + "[" + rs.getString("primaryname");
-                 while (rs.next()) {
+                while (rs.next()) {
                     lista = lista + "," + rs.getString("primaryname");
-                } 
+                }
                 lista = lista + "]";
             }
-           
-            if (edad2 != -1) res = res + "{\"key\":\""+edad1+"-"+edad2+"\",\"lista\": "+lista + "}";
-            else             res = res + "{\"key\":\""+edad1+" plus\",\"lista\": "+lista + "}";
+
+            if (edad2 != -1) {
+                res = res + "{\"key\":\"" + edad1 + "-" + edad2 + "\",\"lista\": " + lista + "}";
+            } else {
+                res = res + "{\"key\":\"" + edad1 + " plus\",\"lista\": " + lista + "}";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -59,9 +62,8 @@ public class DBPersonas {
         }
         return res;
     }
-    
-    public String getPersonasAnyosVividos(int edad1, int edad2)
-    {
+
+    public String getPersonasAnyosVividos(int edad1, int edad2) {
         int birthyear1 = LocalDateTime.now().getYear() - edad1;
         int birthyear2 = LocalDateTime.now().getYear() - edad2;
         String res = "";
@@ -75,17 +77,23 @@ public class DBPersonas {
         try {
             dbc.open();
             String sql;
-            if (edad2 != -1) sql = "select count(*) from namebasics where birthyear <= "+birthyear1+" and birthyear >="+birthyear2+";";
-            else sql = "select count(*) from namebasics where birthyear >= "+birthyear1;
+            if (edad2 != -1) {
+                sql = "select count(*) from namebasics where birthyear <= " + birthyear1 + " and birthyear >=" + birthyear2 + ";";
+            } else {
+                sql = "select count(*) from namebasics where birthyear >= " + birthyear1;
+            }
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             res = "";
             int count = 0;
             if (rs.next()) {
                 count = rs.getInt("count(*)");
-            } 
-            if (edad2 != -1) res = res + "{\"key\":\""+edad1+"-"+edad2+"\",\"cantidad\": "+count + "}";
-            else             res = res + "{\"key\":\""+edad1+" plus\",\"cantidad\": "+count + "}";
+            }
+            if (edad2 != -1) {
+                res = res + "{\"key\":\"" + edad1 + "-" + edad2 + "\",\"cantidad\": " + count + "}";
+            } else {
+                res = res + "{\"key\":\"" + edad1 + " plus\",\"cantidad\": " + count + "}";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -93,10 +101,6 @@ public class DBPersonas {
         }
         return res;
     }
-    
-    
-    
-    
 
     public String getAnyosVividos(String A) {
         String a = A;
@@ -349,6 +353,33 @@ public class DBPersonas {
             dbc.close();
         }
         res = "{\"resultado\":" + cont + "}";
+        return res;
+    }
+
+    public String getActores(int cantidadPeliculas) {
+        String res = "";
+        String cons = "";
+        boolean first = true;
+        ArrayList<String> aux = new ArrayList<>();
+        DBConnection dbc = new DBConnection();
+        try {
+            dbc.open();
+            String sql = "select namebasics.primaryname from namebasics limit " + cantidadPeliculas + ";";
+            Statement stmt = dbc.getConection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            res = "{\"resultado\":";
+            res = res + "[";
+            while (rs.next()) {
+                res = res + "{\"primaryname\":" + "\"" + rs.getString("primaryname") + "\"" + "},";
+            }
+            res = res.substring(0, res.length() - 1);
+            res = res + "]";
+            res = res + "}";
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbc.close();
+        }
         return res;
     }
 }

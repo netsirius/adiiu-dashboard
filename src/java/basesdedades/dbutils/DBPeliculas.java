@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @author hectorsantos
  */
 public class DBPeliculas {
-    
-        public String getRatingsPeliculas(int cantidadPeliculas) {
+
+    public String getRatingsPeliculas(int cantidadPeliculas) {
         String res = "";
         String cons = "";
         boolean first = true;
@@ -23,19 +23,19 @@ public class DBPeliculas {
         DBConnection dbc = new DBConnection();
         try {
             dbc.open();
-            String sql = "select peliculas.originaltitle, ratingpelis.ratio,ratingpelis.votes from ratingpelis inner join peliculas on ratingpelis.tconst=peliculas.tconst order by ratingpelis.votes desc limit "+ cantidadPeliculas + ";";
+            String sql = "select peliculas.originaltitle, ratingpelis.ratio,ratingpelis.votes from ratingpelis inner join peliculas on ratingpelis.tconst=peliculas.tconst order by ratingpelis.votes desc limit " + cantidadPeliculas + ";";
             Statement stmt = dbc.getConection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-                res = "{\"resultado\":";
-                res = res + "[";
-                while (rs.next()) {
-                    res = res + "{\"originaltitle\":" + "\"" + rs.getString("originaltitle") + "\"" +",";
-                    res = res + "\"ratio\":" + rs.getString("ratio") +",";
-                    res = res + "\"votes\":" + rs.getString("votes") +"},";
-                }
-                res = res.substring(0, res.length() - 1);
-                res = res + "]";
-                res = res + "}";
+            res = "{\"resultado\":";
+            res = res + "[";
+            while (rs.next()) {
+                res = res + "{\"originaltitle\":" + "\"" + rs.getString("originaltitle") + "\"" + ",";
+                res = res + "\"ratio\":" + rs.getString("ratio") + ",";
+                res = res + "\"votes\":" + rs.getString("votes") + "},";
+            }
+            res = res.substring(0, res.length() - 1);
+            res = res + "]";
+            res = res + "}";
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -43,5 +43,5 @@ public class DBPeliculas {
         }
         return res;
     }
-    
+
 }
