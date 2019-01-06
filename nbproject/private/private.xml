@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lord_/OneDrive/Escritorio/Interficies%20de%20Usuario/Entregas/Entrega_04/adiiu-dashboard/src/java/serveisweb/PersonasPelis.java</file>
-            <file>file:/C:/Users/lord_/OneDrive/Escritorio/Interficies%20de%20Usuario/Entregas/Entrega_04/adiiu-dashboard/src/java/serveisweb/Peliculas.java</file>
-            <file>file:/C:/Users/lord_/OneDrive/Escritorio/Interficies%20de%20Usuario/Entregas/Entrega_04/adiiu-dashboard/src/java/basesdedades/dbutils/DBPersonas.java</file>
-            <file>file:/C:/Users/lord_/OneDrive/Escritorio/Interficies%20de%20Usuario/Entregas/Entrega_04/adiiu-dashboard/web/index.jsp</file>
-            <file>file:/C:/Users/lord_/OneDrive/Escritorio/Interficies%20de%20Usuario/Entregas/Entrega_04/adiiu-dashboard/src/java/basesdedades/dbutils/DBPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/serveisweb/PersonasPelis.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/basesdedades/dbutils/DBPersonas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/basesdedades/dbutils/DBPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/serveisweb/Peliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/web/privado/entrada.jsp</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/basesdedades/dbutils/DBActorPeliculas.java</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/web/index.jsp</file>
+            <file>file:/Users/hectorsantos/NetBeansProjects/last/adiiu-dashboard/src/java/serveisweb/Personas.java</file>
         </group>
     </open-files>
 </project-private>
