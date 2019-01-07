@@ -23,7 +23,8 @@
                 aux.personas.push({name: nombre , y: anyvividos.resultado});
                 
                 var total = 0;
-                for(int i=0; i < aux.personas.length; i++)
+                var numP = aux.personas.length;
+                for(i=0; i < numP; i++)
                 {
                     total = total + aux.personas[i].y;
                 }
