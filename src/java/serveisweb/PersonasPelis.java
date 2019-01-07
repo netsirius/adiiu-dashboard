@@ -29,10 +29,11 @@ public class PersonasPelis {
         //  Ejemplo:   ---->      param = {"param":["cuantas", "John Wayne"]};
         //  Ejemplo:   ---->      param = {"param":["lista", "John Wayne"]};
         String[] pars = MeuJson.getArguments(param);
-        String res = "null";
+        String res = "{\"response\":{";
         DBActorPeliculas dbap = new DBActorPeliculas();
         if (pars[0].contentEquals("cuantas")) {
-            res = dbap.getActorPeliculasCuantas(pars[1]);
+            res += dbap.getActorPeliculasCuantas(pars[1]) + ",";
+            res += new DBPersonas().getInfoActor(pars[1]) + "}}";
         } else if (pars[0].contentEquals("lista")) {
             res = dbap.getActorPeliculas(pars[1]);
         }

@@ -36,10 +36,13 @@
         function pintarGrafica(nombre, datos) {
             var aux = JSON.parse(sessionStorage.getItem("classepont-datos2"));
             var anyvividos = JSON.parse(datos);
-
+            $('#nombreActor').html(anyvividos.response.info.primaryname);
+            $('#birthyear').html(anyvividos.response.info.birthyear);
+            $('#deathyear').html(anyvividos.response.info.deathyear);
+            $('#cantidadPeli').html(anyvividos.response.resultado);
             if (!contains(aux.personas, nombre))
             {
-                aux.personas.push({name: nombre, y: anyvividos.resultado});
+                aux.personas.push({name: nombre, y: anyvividos.response.resultado});
 
                 var total = 0;
                 var numP = aux.personas.length;
@@ -48,6 +51,7 @@
                     total = total + aux.personas[i].y;
                 }
                 sessionStorage.setItem("classepont-datos2", JSON.stringify(aux));
+
                 $('#pieChart2').highcharts({
                     chart: {
                         plotBackgroundColor: null,
@@ -141,11 +145,11 @@
 //            });
             var lista = "";
             lista += '<ul>\n'
-            for (var i = 0;i < actores.length; i++) {
+            for (var i = 0; i < actores.length; i++) {
                 lista += '<li><a href=\"#\" onClick="mostrarTarta(\'' + actores[i].primaryname + '\')\">' + actores[i].primaryname + '</a></li>\n';
             }
             lista += '<ul/>\n'
-            $( "#tags" ).append( $( lista ) );
+            $("#tags").append($(lista));
         }
         $(document).ready(function () {
             if (sessionStorage.getItem("classepont-datos-actores") == null) {
@@ -232,7 +236,7 @@
                 </ul>
             </div
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12" id="wordCloud">
+                <div class="col-lg-5 col-md-5 col-sm-12 offset-md-1 offset-lg-1" id="wordCloud">
                     <p id="param"></p>
                     <br/>
                     <div id="myCanvasContainer">
@@ -251,6 +255,29 @@
                                                     <li><a href="index.jsp?persona=Fernández">paràmetre</a></li>
                                                 </ul>-->
                     </div>
+                </div>
+
+                <div class="col-md-5 col-lg-5 rating-card" style="margin-top: 70px; margin-left: 70px; height:230px">
+                    <div><h1 id = "nombreActor"></h1></div>
+                    <div class="col-md-6 rating">
+                        <h2 id="cantidadPeli"></h2>
+                        <p><i class="fa fa-film" aria-hidden="true"></i> Películas</p>
+                    </div>
+                    <div class="col-md-6 rating-process">
+                        <div class="col-md-12 text-center">
+                            <p class="tarjeta-titulo">Nació en el</p>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <p id = "birthyear"></p>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <p class="tarjeta-titulo">Murió en el</p>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <p id = "deathyear"></p>
+                        </div>
+                    </div>
+                    <div style="clear:both;"></div>
                 </div>
             </div>
             <div class="row">

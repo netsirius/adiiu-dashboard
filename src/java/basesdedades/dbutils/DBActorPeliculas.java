@@ -88,9 +88,8 @@ public class DBActorPeliculas {
                     cont = rs.getLong(1);
                 }
             }
-            res = "{\"resultado\":";
+            res = "\"resultado\":";
             res = res + cont;
-            res = res + "}";
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -382,4 +382,28 @@ public class DBPersonas {
         }
         return res;
     }
+    
+    public String getInfoActor(String actor)
+    {
+        String res = "";
+        String cons = "";
+        boolean first = true;
+        ArrayList<String> aux = new ArrayList<>();
+        DBConnection dbc = new DBConnection();
+        try {
+            dbc.open();
+            String sql = "select * from namebasics where primaryname = \"" + actor + "\";";
+            Statement stmt = dbc.getConection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            res = "\"info\":";
+            if (rs.next()) {
+                res = res + "{\"primaryname\":\""  + rs.getString("primaryname") + "\", \"birthyear\":\"" +rs.getString("birthyear") + "\", \"deathyear\":\""+rs.getString("deathyear")+"\"}";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbc.close();
+        }
+        return res;
+    }
 }
