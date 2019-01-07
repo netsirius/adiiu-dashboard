@@ -16,51 +16,63 @@
         
         <!-- Graphs pie chart-->
         <script>
-
+            
+            function contains(personas, nombre)
+            {
+                for(i = 0; i < personas.length; i++)
+                {
+                    if (personas[i].name == nombre) return true;
+                }
+                return false;
+            }
             function pintarGrafica(nombre, datos) {
                 var aux = JSON.parse(sessionStorage.getItem("classepont-datos2"));
                 var anyvividos = JSON.parse(datos);
-                aux.personas.push({name: nombre , y: anyvividos.resultado});
                 
-                var total = 0;
-                var numP = aux.personas.length;
-                for(i=0; i < numP; i++)
+                if (!contains(aux.personas, nombre))
                 {
-                    total = total + aux.personas[i].y;
-                }
-                sessionStorage.setItem("classepont-datos2", JSON.stringify(aux));
-                $('#pieChart2').highcharts({
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Porcentaje numero de peliculas por actor total:' + total
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    aux.personas.push({name: nombre , y: anyvividos.resultado});
+
+                    var total = 0;
+                    var numP = aux.personas.length;
+                    for(i=0; i < numP; i++)
+                    {
+                        total = total + aux.personas[i].y;
+                    }
+                    sessionStorage.setItem("classepont-datos2", JSON.stringify(aux));
+                    $('#pieChart2').highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Porcentaje numero de peliculas por actor total:' + total
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    }
                                 }
                             }
-                        }
-                    },
-                    series: [{
-                            name: "Brands",
-                            colorByPoint: true,
-                            data: aux.personas
-                        }]
-                });
+                        },
+                        series: [{
+                                name: "Brands",
+                                colorByPoint: true,
+                                data: aux.personas
+                            }]
+                    });
+                }
             }
 
             //cuando se carga la pagina por primera vez inicializa el array de personas a mostrar en la tarta
