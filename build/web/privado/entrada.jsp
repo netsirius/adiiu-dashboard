@@ -7,18 +7,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+        <script src="/adiiu-dashboard/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="/adiiu-dashboard/js/jquery.tagcanvas.min.js" type="text/javascript"></script>
+        <script src="/adiiu-dashboard/js/highcharts.js" type="text/javascript"></script>
+        <script src="/adiiu-dashboard/js/exporting.js" type="text/javascript"></script>
+    
     </head>
-           <script src="../js/highcharts.js"></script>
-        <script src="../js/exporting.js"></script>
+        
         <!-- Graphs pie chart-->
         <script>
 
             function pintarGrafica(nombre, datos) {
-                var aux = sessionStorage.getItem("classepont-datos2");
+                var aux = JSON.parse(sessionStorage.getItem("classepont-datos2"));
                 var anyvividos = JSON.parse(datos);
-                aux = aux.personas.push({name: nombre , y: anyvividos.resultado})
-                sessionStorage.setItem("classepont-datos2", aux);
+                aux.personas.push({name: nombre , y: anyvividos.resultado});
+                
+                var total = 0;
+                for(int i=0; i < aux.personas.length; i++)
+                {
+                    total = total + aux.personas[i].y;
+                }
+                sessionStorage.setItem("classepont-datos2", JSON.stringify(aux));
                 $('#pieChart2').highcharts({
                     chart: {
                         plotBackgroundColor: null,
@@ -27,7 +36,7 @@
                         type: 'pie'
                     },
                     title: {
-                        text: 'Porcentaje edad de actores   total:' + auxnum
+                        text: 'Porcentaje numero de peliculas por actor total:' + total
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -48,7 +57,7 @@
                     series: [{
                             name: "Brands",
                             colorByPoint: true,
-                            data: aux
+                            data: aux.personas
                         }]
                 });
             }
@@ -58,7 +67,7 @@
 
 
                 if (sessionStorage.getItem("classepont-datos2") == null) {
-                    var init = {personas: []};
+                    var init = "{\"personas\": []}";
                     sessionStorage.setItem("classepont-datos2", init);
                 }
 
@@ -93,8 +102,7 @@
             }
         </script>
         
-        <script src="/adiiu-dashboard/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script src="/adiiu-dashboard/js/jquery.tagcanvas.min.js" type="text/javascript"></script>
+       
         <script>
             var webServiceURL1 = 'http://localhost:8080/adiiu-dashboard/Personas?method=actores';
             var soapMessage1 = '<?xml version="1.0" encoding="UTF-8"?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><ns2:actores xmlns:ns2="http://serveisweb/"><cantidad>{"param":["25"]}</cantidad></ns2:actores></S:Body></S:Envelope>';
