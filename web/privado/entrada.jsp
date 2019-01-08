@@ -236,7 +236,7 @@
                 </ul>
             </div>
             <div class="row">
-                <div class="col-lg-5 offset-lg-1 col-md-5 offset-md-1 col-sm-12" id="wordCloud">
+                <div class="col-lg-5 offset-lg-1 col-md-5 offset-md-1 col-sm-12 text-center" id="wordCloud" style="background-color: white; border-radius: 10px;">
                     <p id="param"></p>
                     <br/>
                     <div id="myCanvasContainer">
@@ -272,7 +272,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12" id="pieChart2"> </div>
+                <div class="col-lg-5 offset-lg-1 col-md-5 offset-md-1 col-sm-12" id="pieChart2" style=" margin-top: 30px; background-color: white; border-radius: 10px;"> </div>
             </div>
         </main>
     </body>
