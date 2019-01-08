@@ -167,7 +167,7 @@
                 OnSuccess(sessionStorage.getItem("classepont-datos-actores"));
             }
             if (!$('#myCanvas').tagcanvas({
-                textColour: '#ff0000',
+                textColour: '#028491',
                 outlineThickness: 1,
                 outlineColour: '#000000',
                 maxSpeed: 0.03,
@@ -234,9 +234,9 @@
                     <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/index.jsp">Dashboard</a></li>
                 </ul>
-            </div
+            </div>
             <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 offset-md-1 offset-lg-1" id="wordCloud">
+                <div class="col-lg-5 offset-lg-1 col-md-5 offset-md-1 col-sm-12" id="wordCloud">
                     <p id="param"></p>
                     <br/>
                     <div id="myCanvasContainer">
@@ -245,16 +245,7 @@
                         </canvas>
                     </div>
 
-                    <div id="tags">
-                        <!--                        <ul>
-                                                    <li><a href="http://www.google.com" target="_blank">Google</a></li>
-                                                    <li><a href="http://www.uib.es">primer UIB</a></li>
-                                                    <li><a href="http://www.uib.es">segon UIB</a></li>
-                                                    <li><a href="http://www.uib.es">tercer UIB</a></li>
-                                                    <li><a href="http://www.uib.es">quart UIB</a></li>
-                                                    <li><a href="index.jsp?persona=Fernández">paràmetre</a></li>
-                                                </ul>-->
-                    </div>
+                    <div id="tags"></div>
                 </div>
 
                 <div class="col-md-5 col-lg-5 rating-card" style="margin-top: 70px; margin-left: 70px; height:230px">
