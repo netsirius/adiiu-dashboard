@@ -166,15 +166,7 @@
             } else {
                 OnSuccess(sessionStorage.getItem("classepont-datos-actores"));
             }
-            if (!$('#myCanvas').tagcanvas({
-                textColour: '#028491',
-                outlineThickness: 1,
-                outlineColour: '#000000',
-                maxSpeed: 0.03,
-                depth: 0.75
-            }, 'tags')) {
-                $('#myCanvasContainer').hide();
-            }
+            
         });
         function OnSuccess(text) {
             var aux;
@@ -192,6 +184,15 @@
                 $("#parr_resp").append(actores.resultado[i].key + " --> " + actores.resultado[i].value + "<br>");
             }
             generarTags(resposta);
+            if (!$('#myCanvas').tagcanvas({
+                textColour: '#028491',
+                outlineThickness: 1,
+                outlineColour: '#000000',
+                maxSpeed: 0.03,
+                depth: 0.75
+            }, 'tags')) {
+                $('#myCanvasContainer').hide();
+            }
         }
         function OnError(text) {
             console.log(text);
